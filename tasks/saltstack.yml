@@ -1,0 +1,10 @@
+- yum: name=salt-master state=installed
+
+- service: name=salt-master state=started enabled=yes
+
+- firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+  with_items:
+  - 4506/tcp
+  - 4505/tcp
+  when: ansible_distribution == 'Fedora' or ansible_distribution_major_version == '7'
+
