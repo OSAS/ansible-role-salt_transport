@@ -1,0 +1,3 @@
+---
+- name: restart salt-master
+  service: name=salt-master state=restarted

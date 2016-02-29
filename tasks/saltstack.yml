@@ -8,3 +8,17 @@
   - 4505/tcp
   when: ansible_distribution == 'Fedora' or ansible_distribution_major_version == '7'
 
+- template: dest=/etc/salt/master.d/client_acl.conf src=client_acl.conf
+  notify: restart salt-master
+
+- meta: flush_handlers
+
+- name: Adjust permissions for file to have non root client
+  file: name={{ item.name }} mode={{ item.mode }}
+  with_items:
+  - { name: '/var/log/salt/', mode: 'o+x'}
+  - { name: '/var/cache/salt', mode: 'o+x'}
+  - { name: '/var/run/salt', mode: 'o+x'}
+  - { name: '/var/run/salt/master', mode: 'o+rx'}
+  - { name: '/var/cache/salt/master/jobs', mode: 'o+rx'}
+
