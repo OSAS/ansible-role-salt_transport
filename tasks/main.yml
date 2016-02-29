@@ -1,5 +1,5 @@
 - include: saltstack.yml
 
 - copy: src=inventory.py  dest=/usr/local/bin/saltstack_inventory.py
-- copy: src=connexion.py  dest=/usr/share/ansible_plugins/connection_plugins/saltstack.py
+- copy: src=connection.py  dest=/usr/share/ansible_plugins/connection_plugins/saltstack.py
 
