@@ -17,14 +17,29 @@
 # along with this software.  If not, see <http://www.gnu.org/licenses/>.
 
 DOCUMENTATION = '''
+---
+module: salt_grains_facts
+short_description: Retrieve grains from the local salt minion to use as ansible facts
+version_added: None
+options:
+  path:
+    required: False
+    description: path to the minion config, if not using the default
 '''
 
 EXAMPLES = '''
+- name: Gather information from the local salt minion
+  salt_grains_facts:
 
+- name: Display a grain (kernel)
+  debug: msg="Salt kernel grain is {{ grains['kernel'] }}"
 '''
 
 RETURN = '''
-
+grains:
+  description: Saltstack grains, see saltstack doc for complete list
+  type: dict
+  returned: always
 '''
 
 try:
