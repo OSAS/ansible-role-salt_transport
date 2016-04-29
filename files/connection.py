@@ -33,6 +33,7 @@ except ImportError:
     pass
 
 import os
+import six
 from ansible import errors
 from ansible.plugins.connection import ConnectionBase
 
@@ -69,6 +70,9 @@ class Connection(ConnectionBase):
             raise errors.AnsibleError("Minion %s didn't answer, check if salt-minion is running and the name is correct" % self.host)
 
         p = res[self.host]
+        if isinstance(p, six.string_types):
+            raise errors.AnsibleError("Minion %s couldn't execute the command, returned: %s" % (self.host,p))
+
         return (p['retcode'], p['stdout'], p['stderr'])
 
     def _normalize_path(self, path, prefix):
