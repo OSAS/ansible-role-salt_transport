@@ -37,6 +37,7 @@ import six
 from ansible import errors
 from ansible.plugins.connection import ConnectionBase
 
+
 class Connection(ConnectionBase):
     ''' Salt-based connections '''
 
@@ -44,6 +45,7 @@ class Connection(ConnectionBase):
     # while the name of the product is salt, naming that module salt cause
     # trouble with module import
     transport = 'saltstack'
+
     def __init__(self, play_context, new_stdin, *args, **kwargs):
         super(Connection, self).__init__(play_context, new_stdin, *args, **kwargs)
         self.host = self._play_context.remote_addr
@@ -71,7 +73,7 @@ class Connection(ConnectionBase):
 
         p = res[self.host]
         if isinstance(p, six.string_types):
-            raise errors.AnsibleError("Minion %s couldn't execute the command, returned: %s" % (self.host,p))
+            raise errors.AnsibleError("Minion %s couldn't execute the command, returned: %s" % (self.host, p))
 
         return (p['retcode'], p['stdout'], p['stderr'])
 
